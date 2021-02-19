@@ -650,7 +650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d112d5a3dd354eb98fb46ef86fe258d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1275839794}
+  moveScript: {fileID: 1275839794}
   cameraSensitivityX: 5
   cameraSensitivityY: -5
 --- !u!4 &2108855150
@@ -682,6 +682,10 @@ PrefabInstance:
     - target: {fileID: 1130252095238716580, guid: 01699f530417140bdbda8d1cedb3532b, type: 3}
       propertyPath: target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1130252095238716580, guid: 01699f530417140bdbda8d1cedb3532b, type: 3}
+      propertyPath: visionAngle
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8838535383345178793, guid: 01699f530417140bdbda8d1cedb3532b, type: 3}
       propertyPath: m_Name

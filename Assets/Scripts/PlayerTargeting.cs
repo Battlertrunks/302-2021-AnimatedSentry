@@ -8,6 +8,7 @@ public class PlayerTargeting : MonoBehaviour {
     public Transform target;
     public bool wantsToTarget = false;
     public float visionDistance = 10;
+    public float visionAngle = 45;
 
     private List<TargetableThing> potentialTargets = new List<TargetableThing>();
 
@@ -16,6 +17,7 @@ public class PlayerTargeting : MonoBehaviour {
     float coolDownPick = 0;
 
     void Start() {
+        Cursor.lockState = CursorLockMode.Locked;
 
     }
 
@@ -23,11 +25,37 @@ public class PlayerTargeting : MonoBehaviour {
     void Update() {
         wantsToTarget = Input.GetButton("Fire2");
 
+        if (!wantsToTarget) target = null;
+
         coolDownScan -= Time.deltaTime; // counting down
-        if (coolDownScan <= 0) ScanForTargets(); // do this when countdown finished
+        if (coolDownScan <= 0 || (target == null && wantsToTarget)) ScanForTargets(); // do this when countdown finished
 
         coolDownPick -= Time.deltaTime;
         if (coolDownPick <= 0) PickATarget(); // do this when countdown finished
+
+        // if we have target adn we cant see it set, target to null
+        if (target && !CanSeeThing(target)) {
+            target = null;
+        }
+
+
+    }
+
+    private bool CanSeeThing(Transform thing) {
+
+        if (!thing) return false; // uh... error
+
+        Vector2 vToThing = thing.position - transform.position;
+
+        // check distance
+        if (vToThing.sqrMagnitude > visionDistance * visionDistance) return false; // Too far away to see...
+
+        // check direction
+        if (Vector3.Angle(transform.forward, vToThing) > visionAngle) return false; // out of vision "cone"
+
+        // TODO: Check occulusion
+
+        return true; 
     }
 
     private void ScanForTargets() {
@@ -44,24 +72,23 @@ public class PlayerTargeting : MonoBehaviour {
         foreach(TargetableThing thing in things) {
             // check how far  away thing is
 
-            Vector3 disToThing = thing.transform.position - transform.position;
 
-            if (disToThing.sqrMagnitude < visionDistance * visionDistance) {
-                if(Vector3.Angle(transform.forward, disToThing) < 45) {
-                    potentialTargets.Add(thing);
-                }
+            // if we can see it
+            // add target to potentialTargets
+
+            if (CanSeeThing(thing.transform)) {
+                potentialTargets.Add(thing);
             }
-
-            // check what direction it is in
         }
-
     }
 
     void PickATarget() {
 
         coolDownPick = 0.25f;
 
-        if (target) return; // we already have a target...
+        //if (target) return; // we already have a target...
+
+        target = null;
 
         float closestDistanceSoFar = 0;
 
@@ -73,6 +100,7 @@ public class PlayerTargeting : MonoBehaviour {
                 target = pt.transform;
                 closestDistanceSoFar = dd;
             }
+
         }
 
     }

@@ -7,8 +7,6 @@ public class PointAt : MonoBehaviour {
     public Transform target;
     private PlayerTargeting playerTargeting;
 
-    public Vector3 naturalAimDirection;
-
     private Quaternion startingRotation;
 
     public bool lockRotationX;
