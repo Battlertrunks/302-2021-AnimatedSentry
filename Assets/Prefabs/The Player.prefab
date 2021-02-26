@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1207247630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1207247631}
+  m_Layer: 0
+  m_Name: Bone - Left Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1207247631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207247630}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.077, y: 0, z: 0.6653}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8838535383542206149}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7882760673048906971
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,7 +75,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  naturalAimDirection: {x: 0, y: 0, z: 0}
   lockRotationX: 0
   lockRotationY: 0
   lockRotationZ: 0
@@ -341,7 +370,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  naturalAimDirection: {x: 0, y: 0, z: 0}
   lockRotationX: 0
   lockRotationY: 0
   lockRotationZ: 0
@@ -472,7 +500,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  naturalAimDirection: {x: 0, y: 0, z: 0}
   lockRotationX: 0
   lockRotationY: 0
   lockRotationZ: 0
@@ -519,6 +546,7 @@ GameObject:
   - component: {fileID: 8838535383345178792}
   - component: {fileID: 1130252095238716580}
   - component: {fileID: 9163730359498598777}
+  - component: {fileID: 6098099315554197016}
   m_Layer: 0
   m_Name: The Player
   m_TagString: Untagged
@@ -577,8 +605,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   wantsToTarget: 0
+  wantsToAttack: 0
   visionDistance: 10
-  visionAngle: 45
+  visionAngle: 60
+  roundsPerSecond: 10
+  armL: {fileID: 8838535383542206149}
+  armR: {fileID: 8838535382820249661}
+  prefavMuzzleFlash: {fileID: 5133857124224241016, guid: 2fd8bf5375c146042966b405caccc5f1, type: 3}
+  handR: {fileID: 0}
+  handL: {fileID: 1207247631}
 --- !u!114 &9163730359498598777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,6 +629,21 @@ MonoBehaviour:
   walkSpeed: 5
   leg1: {fileID: 8838535383018988201}
   leg2: {fileID: 8838535383865556464}
+  gravityMultiplier: 30
+  jumpImpulse: 12
+--- !u!114 &6098099315554197016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8838535383345178793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82c7518dbf52da4495221f36844ac3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthMax: 100
 --- !u!1 &8838535383459323594
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,6 +836,7 @@ Transform:
   m_Children:
   - {fileID: 8838535383462491836}
   - {fileID: 8838535383459323593}
+  - {fileID: 1207247631}
   m_Father: {fileID: 8838535382577035804}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -802,7 +853,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  naturalAimDirection: {x: 0, y: 0, z: 90}
   lockRotationX: 0
   lockRotationY: 0
   lockRotationZ: 0
