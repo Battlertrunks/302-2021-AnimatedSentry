@@ -83,7 +83,7 @@ public class IdleAnim : MonoBehaviour
         if (deathPos.y >= -deathLevel) {
             transform.localRotation = AnimMath.Slide(transform.localRotation, Quaternion.Euler(deathX, deathY, deathZ), 0.001f);
             deathPos = transform.localPosition;
-            deathPos.y += Time.deltaTime * -1;
+            deathPos.y += Time.deltaTime * -2;
             transform.localPosition = deathPos;
         }
     }
