@@ -8,8 +8,6 @@ public class SentryTargeting : MonoBehaviour
     public float visionDistance = 10;
     public float visionAngle = 45;
 
-    private Vector3 deathPos = new Vector3();
-
     private List<SentryTargetableThing> potentialTargets = new List<SentryTargetableThing>();
 
     float coolDownScan = 0;
@@ -23,7 +21,6 @@ public class SentryTargeting : MonoBehaviour
 
 
     private Vector3 startPosArmL;
-    private Vector3 startPosArmR;
 
     /// <summary>
     /// A reference to the particle system prefab to spawn when the gun shoots
@@ -32,6 +29,8 @@ public class SentryTargeting : MonoBehaviour
     public Transform handL;
 
     private HealthSystem health;
+
+    public Transform Holder;
 
     CameraOrbit camOrbit;
 
@@ -43,23 +42,18 @@ public class SentryTargeting : MonoBehaviour
 
     void Update()
     {
-        if (health.health <= 0)
-        {
-            DeathAnim();
-            return;
-        }
+        if (health.health <= 0) return;
+
 
         coolDownScan -= Time.deltaTime; // counting down
         if (coolDownScan <= 0 || target == null) { 
             ScanForTargets();
-            print("Target Null");
         } // do this when countdown finished
 
         coolDownPick -= Time.deltaTime;
         if (coolDownPick <= 0)
         {
             PickATarget();
-            print("Picktarget");
         }// do this when countdown finished
 
         if (cooldownShoot > 0) cooldownShoot -= Time.deltaTime;
@@ -68,24 +62,12 @@ public class SentryTargeting : MonoBehaviour
         if (target && !CanSeeThing(target))
         {
             target = null;
-            print("Can not see anything");
         }
 
         SlideArmsHome();
 
         DoAttack();
 
-    }
-
-    private void DeathAnim()
-    {
-        transform.localRotation = AnimMath.Slide(transform.localRotation, Quaternion.Euler(0, 0, 0), 0.001f);
-        if (deathPos.y >= -1)
-        {
-            deathPos = transform.localPosition;
-            deathPos.y += Time.deltaTime * -2;
-            transform.localPosition = deathPos;
-        }
     }
 
     private void SlideArmsHome()
@@ -109,7 +91,6 @@ public class SentryTargeting : MonoBehaviour
             targetHealth.TakeDamage(10);
         }
 
-        print("pew");
         cooldownShoot = 1 / roundsPerSecond;
 
         // attack!
@@ -132,13 +113,13 @@ public class SentryTargeting : MonoBehaviour
 
         if (!thing) return false; // uh... error
 
-        Vector2 vToThing = thing.position - transform.position;
+        Vector3 vToThing = thing.position - Holder.position;
 
         // check distance
         if (vToThing.sqrMagnitude > visionDistance * visionDistance) return false; // Too far away to see...
 
         // check direction
-        if (Vector3.Angle(transform.forward, vToThing) > visionAngle) return false; // out of vision "cone"
+        if (Vector3.Angle(Holder.forward, vToThing) > visionAngle) return false; // out of vision "cone"
 
         // TODO: Check occulusion
 
@@ -192,7 +173,6 @@ public class SentryTargeting : MonoBehaviour
             {
                 target = pt.transform;
                 closestDistanceSoFar = dd;
-                print("dd" + dd);
             }
 
         }

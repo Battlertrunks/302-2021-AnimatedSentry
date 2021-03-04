@@ -10,10 +10,13 @@ public class PlayerMovement : MonoBehaviour {
     private HealthSystem health;
     public float walkSpeed = 5;
 
-    private Vector3 deathPos = new Vector3();
-
     public Transform leg1;
     public Transform leg2;
+
+    public Transform armL;
+    public Transform armR;
+    public Transform head;
+    private Vector3 IdleAnimVec = new Vector3();
 
     public float gravityMultiplier = 10;
     public float jumpImpulse = 5;
@@ -39,12 +42,11 @@ public class PlayerMovement : MonoBehaviour {
         health = GetComponent<HealthSystem>();
     }
 
-    void Update() {
+    void Update()
+    {
 
-        if (health.health <= 0) {
-            DeathAnim();
-            return;
-        }
+        if (health.health <= 0) return;
+
 
         // countdown:
         if (timeLeftGrounded > 0) timeLeftGrounded -= Time.deltaTime;
@@ -52,16 +54,7 @@ public class PlayerMovement : MonoBehaviour {
         MovePlayer();
         if (isGrounded) WiggleLegs(); // idle + walk
         else AirLegs(); // jumnp (or falling)
-    }
 
-    private void DeathAnim()
-    {
-        pawn.transform.localRotation = AnimMath.Slide(pawn.transform.localRotation, Quaternion.Euler(90, 0, 0), 0.001f);
-        if (deathPos.y >= -1) {
-            deathPos = pawn.transform.localPosition;
-            deathPos.y += Time.deltaTime * -2;
-            pawn.transform.localPosition = deathPos;
-        }
     }
 
     private void WiggleLegs() {
