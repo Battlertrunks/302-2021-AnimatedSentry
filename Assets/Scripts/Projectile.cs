@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
-    private Vector3 bulletInAction = new Vector3();
-    private Transform facingbullet;
     public int speed = 10;
-
-    public Transform targetToShoot;
 
     private void Start(){
         //bulletInAction.z = 10;
@@ -20,7 +16,7 @@ public class Projectile : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        print("Hit");
+
         HealthSystem playerHealth = other.GetComponent<HealthSystem>();
         if (playerHealth) {
             playerHealth.TakeDamage(10); // do damage to player

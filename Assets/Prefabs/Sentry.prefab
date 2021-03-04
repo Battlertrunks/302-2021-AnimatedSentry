@@ -2997,6 +2997,7 @@ GameObject:
   - component: {fileID: 3369376705244161152}
   - component: {fileID: 3768293128682501379}
   - component: {fileID: 2376140951041974029}
+  - component: {fileID: 2610732801972026637}
   m_Layer: 0
   m_Name: Sentry
   m_TagString: Untagged
@@ -3105,6 +3106,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0.12}
+--- !u!114 &2610732801972026637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747944300447391500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81494c0483071db4080fcca5285ee294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 0}
 --- !u!1 &747944300520996139
 GameObject:
   m_ObjectHideFlags: 0

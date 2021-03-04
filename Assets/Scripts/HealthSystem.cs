@@ -15,7 +15,7 @@ public class HealthSystem : MonoBehaviour {
 
         if (amt <= 0) return;
         
-        health -= amt;
+        if (health > 0) health -= amt;
 
         if (health <= 0) Die();
     }

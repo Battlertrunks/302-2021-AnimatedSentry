@@ -87,6 +87,7 @@ public class PlayerTargeting : MonoBehaviour {
         if (!CanSeeThing(target)) return; // target can't be seen
 
         Instantiate(bullets, handL.position, handL.rotation);
+        Instantiate(bullets, handR.position, handR.rotation);
 
         cooldownShoot = 1 / roundsPerSecond;
 
