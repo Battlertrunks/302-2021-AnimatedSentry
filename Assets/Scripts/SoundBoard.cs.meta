@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cbf7738db9216d545b546e51954ee6fd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - jumpSound: {fileID: 8300000, guid: 3b417d69a9ee7d44e92723dc26b104dd, type: 3}
+  - deathSound: {fileID: 8300000, guid: e9e84a0d54e3bec41920ae62cc000cb6, type: 3}
+  - gunSound: {fileID: 8300000, guid: 2799db7d1bd372f4b98612be8173b3fb, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

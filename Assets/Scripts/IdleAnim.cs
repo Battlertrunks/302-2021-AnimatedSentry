@@ -18,13 +18,18 @@ public class IdleAnim : MonoBehaviour
     private Vector3 playerPos = new Vector3();
     private Vector3 IdleAnimVec = new Vector3();
 
-    public SentryTargeting firingAtTargetSentry;
+    private SentryTargeting firingAtTargetSentry;
     private PlayerTargeting firingAtTargetPlayer;
 
     public int deathX = 0, deathY = 0, deathZ = 0;
     public float deathLevel = 0;
     private HealthSystem health;
     private Vector3 deathPos = new Vector3();
+
+    bool playOnce = true;
+
+    [Range(0f, 1f)]
+    public float percent = 0;
 
     private void Start()
     {
@@ -80,11 +85,16 @@ public class IdleAnim : MonoBehaviour
 
     private void DeathAnimation() {
         
+            transform.localRotation = AnimMath.Slide(transform.localRotation, Quaternion.Euler(deathX, deathY, deathZ), percent);
         if (deathPos.y >= -deathLevel) {
-            transform.localRotation = AnimMath.Slide(transform.localRotation, Quaternion.Euler(deathX, deathY, deathZ), 0.001f);
             deathPos = transform.localPosition;
             deathPos.y += Time.deltaTime * -2;
             transform.localPosition = deathPos;
+
+            if (playOnce) {
+                SoundBoard.PlayDeath();
+                playOnce = false;
+            }
         }
     }
 }

@@ -2996,6 +2996,7 @@ GameObject:
   - component: {fileID: 747944300447391503}
   - component: {fileID: 3369376705244161152}
   - component: {fileID: 3768293128682501379}
+  - component: {fileID: 2376140951041974029}
   m_Layer: 0
   m_Name: Sentry
   m_TagString: Untagged
@@ -3044,8 +3045,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   visionDistance: 20
-  visionAngle: 86
+  visionAngle: 40
   roundsPerSecond: 10
+  bullets: {fileID: 7824144204833119076, guid: 348a7a574139956419456ae1d80d7715, type: 3}
   armL: {fileID: 747944298908943356}
   prefavMuzzleFlash: {fileID: 5133857124224241016, guid: 2fd8bf5375c146042966b405caccc5f1, type: 3}
   handL: {fileID: 9011095342191381462}
@@ -3068,11 +3070,11 @@ MonoBehaviour:
   amountOfDegrees: 80
   amountOfSpeed: 2
   percentSen: 0.1
-  firingAtTargetSentry: {fileID: 0}
   deathX: 0
   deathY: 0
-  deathZ: 0
-  deathLevel: 0
+  deathZ: 242
+  deathLevel: 0.7
+  percent: 0.0001
 --- !u!114 &3768293128682501379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3085,10 +3087,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab65b4aaf42b0b84fa50463dbefed131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathX: 4
-  deathY: 8
-  deathZ: 242
-  deathLevel: 0.7
+--- !u!143 &2376140951041974029
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747944300447391500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 0.67
+  m_Radius: 0.22
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0.12}
 --- !u!1 &747944300520996139
 GameObject:
   m_ObjectHideFlags: 0

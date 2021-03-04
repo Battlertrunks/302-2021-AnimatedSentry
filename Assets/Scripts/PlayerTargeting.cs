@@ -11,6 +11,8 @@ public class PlayerTargeting : MonoBehaviour {
     public float visionDistance = 10;
     public float visionAngle = 45;
 
+    public GameObject bullets;
+
     private List<TargetableThing> potentialTargets = new List<TargetableThing>();
 
     float coolDownScan = 0;
@@ -84,14 +86,11 @@ public class PlayerTargeting : MonoBehaviour {
         if (target == null) return; // no target
         if (!CanSeeThing(target)) return; // target can't be seen
 
-        HealthSystem targetHealth = target.GetComponent<HealthSystem>();
+        Instantiate(bullets, handL.position, handL.rotation);
 
-        if (targetHealth) {
-            targetHealth.TakeDamage(20);
-        }
-
-        print("pew");
         cooldownShoot = 1 / roundsPerSecond;
+
+        SoundBoard.PlayGun();
 
         // attack!
 

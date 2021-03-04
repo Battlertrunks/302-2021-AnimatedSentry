@@ -23,7 +23,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207247630}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.077, y: 0, z: 0.6653}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -642,6 +642,7 @@ MonoBehaviour:
   wantsToAttack: 0
   visionDistance: 10
   visionAngle: 60
+  bullets: {fileID: 7824144204833119076, guid: 348a7a574139956419456ae1d80d7715, type: 3}
   roundsPerSecond: 10
   armL: {fileID: 8838535383542206149}
   armR: {fileID: 8838535382820249661}
@@ -699,11 +700,11 @@ MonoBehaviour:
   amountOfDegrees: 80
   amountOfSpeed: 2
   percentSen: 0.9
-  firingAtTargetSentry: {fileID: 0}
-  deathX: 0
+  deathX: 90
   deathY: 0
   deathZ: 0
-  deathLevel: 0
+  deathLevel: 1
+  percent: 0.001
 --- !u!114 &3696220516526411141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,10 +717,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab65b4aaf42b0b84fa50463dbefed131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathX: 90
-  deathY: 0
-  deathZ: 0
-  deathLevel: 1
 --- !u!114 &309423818366191348
 MonoBehaviour:
   m_ObjectHideFlags: 0

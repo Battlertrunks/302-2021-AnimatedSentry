@@ -16,6 +16,8 @@ public class SentryTargeting : MonoBehaviour
     float cooldownShoot = 0;
     public float roundsPerSecond = 10f;
 
+    public GameObject bullets;
+
     // references to the player's arm "bones":
     public Transform armL;
 
@@ -84,12 +86,9 @@ public class SentryTargeting : MonoBehaviour
         if (target == null) return; // no target
         if (!CanSeeThing(target)) return; // target can't be seen
 
-        HealthSystem targetHealth = target.GetComponent<HealthSystem>();
+        Instantiate(bullets, handL.position, handL.rotation);
 
-        if (targetHealth)
-        {
-            targetHealth.TakeDamage(10);
-        }
+        SoundBoard.PlayGun();
 
         cooldownShoot = 1 / roundsPerSecond;
 

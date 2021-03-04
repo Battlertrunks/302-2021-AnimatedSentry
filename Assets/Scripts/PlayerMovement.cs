@@ -134,6 +134,7 @@ public class PlayerMovement : MonoBehaviour {
             if (isJumpHeld)
             {
                 verticalVelocity = -jumpImpulse;
+                SoundBoard.PlayJump();
                 timeLeftGrounded = 0; // not on ground (for animation's sake)
             }
         }
