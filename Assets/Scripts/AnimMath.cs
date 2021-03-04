@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class AnimMath
-{
-    public static float Lerp(float min, float max, float p, bool allowExtrapolation = true)
-    {
-        if (!allowExtrapolation)
-        {
+/// <summary>
+/// Math that is used for our mechanics
+/// </summary>
+public static class AnimMath {
+    public static float Lerp(float min, float max, float p, bool allowExtrapolation = true) {
+        if (!allowExtrapolation) {
             if (p < 0) p = 0;
             if (p > 1) p = 1;
         }
@@ -15,10 +15,8 @@ public static class AnimMath
         return (max - min) * p + min;
     }
 
-    public static Vector3 Lerp(Vector3 min, Vector3 max, float p, bool allowExtrapolation = true)
-    {
-        if (!allowExtrapolation)
-        {
+    public static Vector3 Lerp(Vector3 min, Vector3 max, float p, bool allowExtrapolation = true) {
+        if (!allowExtrapolation) {
             if (p < 0) p = 0;
             if (p > 1) p = 1;
         }
@@ -34,8 +32,7 @@ public static class AnimMath
 
     public static Quaternion Lerp(Quaternion min, Quaternion max, float p, bool allowExtrapolation = true) {
 
-        if (!allowExtrapolation)
-        {
+        if (!allowExtrapolation) {
             if (p < 0) p = 0;
             if (p > 1) p = 1;
         }
@@ -43,14 +40,12 @@ public static class AnimMath
         return Quaternion.Lerp(min, max, p);
     }
 
-    public static float Slide(float current, float target, float percentLeftAfter1Second)
-    {
+    public static float Slide(float current, float target, float percentLeftAfter1Second) {
         float p = 1 - Mathf.Pow(percentLeftAfter1Second, Time.deltaTime);
         return AnimMath.Lerp(current, target, p);
     }
 
-    public static Vector3 Slide(Vector3 current, Vector3 target, float percentLeftAfter1Second)
-    {
+    public static Vector3 Slide(Vector3 current, Vector3 target, float percentLeftAfter1Second) {
         float p = 1 - Mathf.Pow(percentLeftAfter1Second, Time.deltaTime);
         return AnimMath.Lerp(current, target, p);
     }

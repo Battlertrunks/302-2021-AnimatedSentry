@@ -3,23 +3,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// Camera orbit around the player 
+/// </summary>
 public class CameraOrbit : MonoBehaviour {
 
+    /// <summary>
+    /// Getting the PlayerMovement script
+    /// </summary>
     public PlayerMovement moveScript;
+
+    /// <summary>
+    /// Getting the PlayerTargeting script
+    /// </summary>
     private PlayerTargeting targetScript;
+
+    /// <summary>
+    /// Getting the camera to be able to edit its position and rotation
+    /// </summary>
     private Camera cam;
 
+    /// <summary>
+    /// Yaw of camera
+    /// </summary>
     private float yaw = 0;
+
+    /// <summary>
+    /// Pitch of camera
+    /// </summary>
     private float pitch = 0;
 
+    [Header("Camera attribute values")]
+
+    /// <summary>
+    /// View sensitivity of X axis
+    /// </summary>
     public float cameraSensitivityX = 10;
+
+    /// <summary>
+    /// View sensitivity of Y axis
+    /// </summary>
     public float cameraSensitivityY = 10;
 
+    /// <summary>
+    /// The shake intensity when player shoots
+    /// </summary>
     public float shakeIntensity = 0;
 
 
     private void Start() {
+        // Getting components
         targetScript = moveScript.GetComponent<PlayerTargeting>();
         cam = GetComponentInChildren<Camera>();
     }
@@ -27,7 +60,7 @@ public class CameraOrbit : MonoBehaviour {
     void Update() {
         PlayerOrbitCamera();
 
-        if (moveScript)
+        if (moveScript) // the moveScript exists
             transform.position = moveScript.transform.position;
 
 
@@ -40,14 +73,21 @@ public class CameraOrbit : MonoBehaviour {
         ShakeCamera();
     }
 
+    /// <summary>
+    /// Shakes camera based on intensity
+    /// </summary>
+    /// <param name="intensity"></param>
     public void Shake(float intensity = 1) {
         shakeIntensity = intensity;
  
     }
 
+    /// <summary>
+    /// Shakes the camera when the player shoots 
+    /// </summary>
     private void ShakeCamera() {
 
-        if (shakeIntensity < 0) shakeIntensity = 0;
+        if (shakeIntensity < 0) shakeIntensity = 0; // does nothing 
 
         if (shakeIntensity > 0) shakeIntensity -= Time.deltaTime;
         else return; // shake intensity is 0; so do nothing...
@@ -59,6 +99,9 @@ public class CameraOrbit : MonoBehaviour {
         cam.transform.localRotation = AnimMath.Lerp(cam.transform.localRotation, cam.transform.localRotation * targetRot, shakeIntensity * shakeIntensity);
     }
 
+    /// <summary>
+    /// Zoom camera when player targets object
+    /// </summary>
     private void ZoomCamera() {
 
         float dis = 10;
@@ -66,10 +109,18 @@ public class CameraOrbit : MonoBehaviour {
 
         cam.transform.localPosition = AnimMath.Slide(cam.transform.localPosition, new Vector3(0, 0, -dis), .001f);
     }
-    private bool IsTargeting()
-    {
+
+    /// <summary>
+    /// When the player is targeting
+    /// </summary>
+    /// <returns></returns>
+    private bool IsTargeting() {
         return (targetScript && targetScript.target != null && targetScript.wantsToTarget);
     }
+
+    /// <summary>
+    /// Rotates the camera when the target is locked
+    /// </summary>
     private void RotateCamToLookAtTarget() {
 
         
@@ -89,15 +140,20 @@ public class CameraOrbit : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Camera orbits around the player when the player moves the mouse around
+    /// </summary>
     private void PlayerOrbitCamera() {
+        // Gets 'float' input when the player moves the mouse
         float mX = Input.GetAxisRaw("Mouse X");
         float mY = Input.GetAxisRaw("Mouse Y");
 
+        // Gets yaw and pitch
         yaw += mX * cameraSensitivityX;
         pitch += mY * cameraSensitivityY;
 
 
-        if (IsTargeting()) { // x-targeting:
+        if (IsTargeting()) { // x-targeting: // if targeting 
 
             pitch = Mathf.Clamp(pitch, 15, 60);
 
@@ -108,11 +164,11 @@ public class CameraOrbit : MonoBehaviour {
             yaw = Mathf.Clamp(yaw, playerYaw - 40, playerYaw + 40);
 
         } else { // not targeting / free look
-            pitch = Mathf.Clamp(pitch, -10, 89);
+            pitch = Mathf.Clamp(pitch, -10, 89); // clamps pitch to not get stuck
         }
 
 
 
-        transform.rotation = AnimMath.Slide(transform.rotation, Quaternion.Euler(pitch, yaw, 0), .001f);
+        transform.rotation = AnimMath.Slide(transform.rotation, Quaternion.Euler(pitch, yaw, 0), .001f); // makes camera have a smooth transition when moving it
     }
 }

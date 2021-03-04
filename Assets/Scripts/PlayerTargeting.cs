@@ -3,51 +3,134 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Player Targeting system
+/// </summary>
 public class PlayerTargeting : MonoBehaviour {
 
+    /// <summary>
+    /// Target to aim at
+    /// </summary>
     public Transform target;
+
+    [Header("Bools")]
+
+    /// <summary>
+    /// The player wants to target the enemy
+    /// </summary>
     public bool wantsToTarget = false;
+
+    /// <summary>
+    /// The player wants to attact the target
+    /// </summary>
     public bool wantsToAttack = false;
+
+    [Header("Able to view Target")]
+
+    /// <summary>
+    /// Player's vision distance that the player can see
+    /// </summary>
     public float visionDistance = 10;
+
+    /// <summary>
+    /// The player's angle that they can see
+    /// </summary>
     public float visionAngle = 45;
 
+    [Header("Bullet attributes")]
+
+    /// <summary>
+    /// Prefab of bullets 
+    /// </summary>
     public GameObject bullets;
 
-    private List<TargetableThing> potentialTargets = new List<TargetableThing>();
-
-    float coolDownScan = 0;
-    float coolDownPick = 0;
-
-    float cooldownShoot = 0;
+    /// <summary>
+    /// Rounds shot per second when the player is shooting
+    /// </summary>
     public float roundsPerSecond = 10f;
 
-    // references to the player's arm "bones":
+    /// <summary>
+    /// List of targets that the player can see
+    /// </summary>
+    private List<TargetableThing> potentialTargets = new List<TargetableThing>();
+
+    [Header("Cooldowns")]
+
+    /// <summary>
+    /// Scan cooldown
+    /// </summary>
+    float coolDownScan = 0;
+
+    /// <summary>
+    /// Pick cooldown
+    /// </summary>
+    float coolDownPick = 0;
+
+    /// <summary>
+    /// Shot cooldown
+    /// </summary>
+    float cooldownShoot = 0;
+
+    [Header("Transforms")]
+
+    /// <summary>
+    /// references to the player's left arm "bone"
+    /// </summary>
     public Transform armL;
+
+    /// <summary>
+    /// references to the player's right arm "bone"
+    /// </summary>
     public Transform armR;
 
+    /// <summary>
+    /// Player's left arm start position
+    /// </summary>
     private Vector3 startPosArmL;
+
+    /// <summary>
+    /// Player's right arm start position
+    /// </summary>
     private Vector3 startPosArmR;
+
+
+    [Header("Muzzle System")]
 
     /// <summary>
     /// A reference to the particle system prefab to spawn when the gun shoots
     /// </summary>
     public ParticleSystem prefavMuzzleFlash;
+
+    /// <summary>
+    /// Player's right hand
+    /// </summary>
     public Transform handR;
+
+    /// <summary>
+    /// Player's left hand
+    /// </summary>
     public Transform handL;
 
+    [Header("Camera system")]
+
+    /// <summary>
+    /// Camera actions when targeting
+    /// </summary>
     CameraOrbit camOrbit;
 
     void Start() {
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked; // locks cursor on screen and makes it invisible
 
+        // Getting arms local position
         startPosArmL = armL.localPosition;
         startPosArmR = armR.localPosition;
 
-        camOrbit = Camera.main.GetComponentInParent<CameraOrbit>();
+        camOrbit = Camera.main.GetComponentInParent<CameraOrbit>(); // Getting camera
     }
 
 
     void Update() {
+        // When player clicks left and right mouse button
         wantsToTarget = Input.GetButton("Fire2");
         wantsToAttack = Input.GetButton("Fire1");
 
@@ -72,12 +155,18 @@ public class PlayerTargeting : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Slide Player's arms back to where is was before
+    /// </summary>
     private void SlideArmsHome()
     {
-        armL.localPosition = AnimMath.Slide(armL.localPosition, startPosArmL, .01f);
+        armL.localPosition = AnimMath.Slide(armL.localPosition, startPosArmL, .01f); // slides turret head to its start position
         armR.localPosition = AnimMath.Slide(armR.localPosition, startPosArmR, .01f);
     }
 
+    /// <summary>
+    /// Does attack when player has a target and wants to attack
+    /// </summary>
     private void DoAttack() {
 
         if (cooldownShoot > 0) return; // too soon!
@@ -86,17 +175,19 @@ public class PlayerTargeting : MonoBehaviour {
         if (target == null) return; // no target
         if (!CanSeeThing(target)) return; // target can't be seen
 
+        // spawns bullets on left and right hand
         Instantiate(bullets, handL.position, handL.rotation);
         Instantiate(bullets, handR.position, handR.rotation);
 
-        cooldownShoot = 1 / roundsPerSecond;
+        cooldownShoot = 1 / roundsPerSecond; // rounds per second
 
-        SoundBoard.PlayGun();
+        SoundBoard.PlayGun(); // plays gun sound
 
         // attack!
 
-        camOrbit.Shake(.5f);
+        camOrbit.Shake(.5f); // shakes camera slightly when shooting
 
+        // spawns muzzle particles to look like the player is shooting a gun
         if (handL) Instantiate(prefavMuzzleFlash, handL.position, handL.rotation);
         if (handR) Instantiate(prefavMuzzleFlash, handR.position, handR.rotation);
         // trigger arm animation
@@ -111,6 +202,11 @@ public class PlayerTargeting : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Calculation for player to see targets
+    /// </summary>
+    /// <param name="thing"></param>
+    /// <returns></returns>
     private bool CanSeeThing(Transform thing) {
 
         if (!thing) return false; // uh... error
@@ -128,6 +224,9 @@ public class PlayerTargeting : MonoBehaviour {
         return true; 
     }
 
+    /// <summary>
+    /// Player scans for targets and puts them in a list
+    /// </summary>
     private void ScanForTargets() {
 
         coolDownScan = 1; // do the next scan in 2 seconds
@@ -152,6 +251,9 @@ public class PlayerTargeting : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Player picks a target depending on target's position
+    /// </summary>
     void PickATarget() {
 
         coolDownPick = 0.25f;

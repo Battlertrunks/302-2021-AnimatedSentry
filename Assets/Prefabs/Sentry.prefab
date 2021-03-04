@@ -2995,7 +2995,6 @@ GameObject:
   - component: {fileID: 747944300447391502}
   - component: {fileID: 747944300447391503}
   - component: {fileID: 3369376705244161152}
-  - component: {fileID: 3768293128682501379}
   - component: {fileID: 2376140951041974029}
   - component: {fileID: 2610732801972026637}
   m_Layer: 0
@@ -3076,18 +3075,6 @@ MonoBehaviour:
   deathZ: 242
   deathLevel: 0.7
   percent: 0.0001
---- !u!114 &3768293128682501379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 747944300447391500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab65b4aaf42b0b84fa50463dbefed131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!143 &2376140951041974029
 CharacterController:
   m_ObjectHideFlags: 0

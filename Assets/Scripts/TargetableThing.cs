@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetableThing : MonoBehaviour
-{
+/// <summary>
+/// Used to target at the Sentry turret
+/// </summary>
+public class TargetableThing : MonoBehaviour {
     
 }
