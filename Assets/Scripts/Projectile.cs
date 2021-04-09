@@ -10,7 +10,9 @@ public class Projectile : MonoBehaviour {
     /// <summary>
     /// Speeed of the bullets
     /// </summary>
-    public int speed = 10; 
+    public int speed = 10;
+
+    public ParticleSystem hitEffect;
 
     private void Update() {
         transform.localPosition += transform.forward * speed * Time.deltaTime; // Makes the bullet go forward of where it was shot
@@ -24,6 +26,7 @@ public class Projectile : MonoBehaviour {
         if (playerHealth) {
             playerHealth.TakeDamage(10); // do damage to player
         }
+        Instantiate(hitEffect, transform.position, transform.rotation);
         Destroy(gameObject); // remove projectile from game
         
         
